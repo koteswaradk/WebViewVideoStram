@@ -3,6 +3,8 @@ package servicetutorial.service;
 import android.*;
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -29,6 +31,7 @@ import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -53,12 +56,27 @@ public class MainActivity extends Activity {
         tv_locality = (TextView)findViewById(R.id.tv_locality);
         geocoder = new Geocoder(this, Locale.getDefault());
 
-        Intent intent = new Intent(getApplicationContext(), GoogleService.class);
-        startService(intent);
+       /* Intent intent = new Intent(getApplicationContext(), GoogleService.class);
+        startService(intent);*/
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         fn_permission();
+        PendingIntent service = null;
+        Intent intentForService = new Intent(this.getApplicationContext(), GoogleService.class);
+        final AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+        final Calendar time = Calendar.getInstance();
+        time.set(Calendar.MINUTE, 0);
+        time.set(Calendar.SECOND, 0);
+        time.set(Calendar.MILLISECOND, 0);
+        if (service == null) {
+            service = PendingIntent.getService(this, 0,
+                    intentForService, PendingIntent.FLAG_CANCEL_CURRENT);
+        }
 
-
-
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time.getTime().getTime(), 60, service);
     }
 
     private void fn_permission() {
@@ -125,9 +143,9 @@ public class MainActivity extends Activity {
                 Uri selectedUri = getContentResolver().insert(GPSProvider.CONTENT_GPS_MONITOR_URI, selectedValues);
                 if (selectedUri!=null){
                     if (ContentUris.parseId(selectedUri)>0);
-                        Log.i(TAG,"insertion success");
+                       // Log.i(TAG,"insertion success");
                 }else{
-                    Log.i(TAG,"insertion fails");
+                   // Log.i(TAG,"insertion fails");
                 }
 
 

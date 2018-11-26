@@ -170,8 +170,8 @@ public class GoogleService extends Service implements LocationListener
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Intent broadcastIntent = new Intent("servicetutorial.service.ActivityRecognition.RestartGps");
+        /*Intent broadcastIntent = new Intent("servicetutorial.service.ActivityRecognition.RestartGps");
         intent.putExtra("restartservice","restart");
-        sendBroadcast(broadcastIntent);
+        sendBroadcast(broadcastIntent);*/
     }
 }

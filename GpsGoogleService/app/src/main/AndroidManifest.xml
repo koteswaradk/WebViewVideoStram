@@ -22,7 +22,6 @@
 
         <service android:name=".GoogleService" />
 
-
         <receiver
             android:name=".GPSBroadCastReceiver"
             android:enabled="true"
@@ -51,9 +50,8 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity
-            android:name=".GpsMapsLocationsActivity"
-           ></activity>
+        <activity android:name=".GpsMapsLocationsActivity" />
+        <activity android:name=".GPSMainActivity"></activity>
     </application>
 
 </manifest>
